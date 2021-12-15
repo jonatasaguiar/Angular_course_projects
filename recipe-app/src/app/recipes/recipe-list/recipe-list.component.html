@@ -1,4 +1,4 @@
-<div class="row">
+<!-- <div class="row">
   <div class="col-xs-12">
     <button class="btn btn-success">New Recipe</button>
   </div>
@@ -10,6 +10,24 @@
       *ngFor="let recipeEl of recipes"
       [recipeElement]="recipeEl"
       (recipeSelected)="onRecipeSelected(recipeEl)"
+    ></app-recipe-item>
+  </div>
+</div>
+
+<!-- we could have used src={{ recipe.imagePath }} as it's the non-Angular (more traditional approach)-->
+<!-- we are using property binding in the case above -->
+
+<div class="row">
+  <div class="col-xs-12">
+    <button class="btn btn-success">New Recipe</button>
+  </div>
+</div>
+<hr />
+<div class="row">
+  <div class="col-xs-12">
+    <app-recipe-item
+      *ngFor="let recipeEl of recipes"
+      [recipeElement]="recipeEl"
     ></app-recipe-item>
   </div>
 </div>
