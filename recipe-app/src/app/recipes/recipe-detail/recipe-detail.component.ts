@@ -14,12 +14,18 @@ export class RecipeDetailComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  onShoppItems() {
-    for (let ingredient of this.recipe.ingredients) {
-      console.log(ingredient.name + ' - ' + ingredient.amount);
-      const newIngredient = new Ingredient(ingredient.name, ingredient.amount);
-      this.shoppingListService.addIngredient(newIngredient);
-    }
+  // onAddToShoppingList() {
+  //   for (let ingredient of this.recipe.ingredients) {
+  //     console.log(ingredient.name + ' - ' + ingredient.amount);
+  //     const ingredientName: string = ingredient.name;
+  //     const ingredientAmount: number = ingredient.amount;
+  //     const newIngredient = new Ingredient(ingredientName, ingredientAmount);
+  //     this.shoppingListService.addIngredient(newIngredient);
+  //   }
+  //   console.log('Shopping items now');
+  // }
+  onAddToShoppingList() {
+    this.shoppingListService.addIngredients(this.recipe.ingredients);
     console.log('Shopping items now');
   }
 }
