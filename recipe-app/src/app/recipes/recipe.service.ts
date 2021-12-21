@@ -23,4 +23,20 @@ export class RecipeService {
   getRecipes() {
     return this.recipes.slice();
   }
+
+  // getRecipe(name: string) {
+  //   for (let recipe of this.recipes) {
+  //     if (recipe.name === name) {
+  //       return recipe;
+  //     } else {
+  //       continue;
+  //     }
+  //   }
+  // }
+  getRecipe(name: string) {
+    const recipe = this.recipes.find((rec) => {
+      return rec.name === name;
+    });
+    return recipe;
+  }
 }
