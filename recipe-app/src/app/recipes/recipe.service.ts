@@ -33,10 +33,14 @@ export class RecipeService {
   //     }
   //   }
   // }
-  getRecipe(name: string) {
-    const recipe = this.recipes.find((rec) => {
-      return rec.name === name;
-    });
-    return recipe;
+  // getRecipe(name: string) {
+  //   const recipe = this.recipes.find((rec) => {
+  //     return rec.name === name;
+  //   });
+  //   return recipe;
+  // }
+
+  getRecipe(index: number) {
+    return this.recipes[index];
   }
 }

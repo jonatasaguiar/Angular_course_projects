@@ -22,7 +22,8 @@
 <a
   style="cursor: pointer"
   class="list-group-item clearfix"
-  [routerLink]="['../recipes', 'recipe-detail', recipe.name]"
+  [routerLink]="[index]"
+  routerLinkActive="active"
 >
   <div class="pull-left">
     <h4 class="list-group-item-heading">{{ recipe.name }}</h4>
