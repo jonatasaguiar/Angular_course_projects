@@ -1,9 +1,10 @@
 import { EventEmitter } from '@angular/core';
+import { Subject } from 'rxjs';
 import { Ingredient } from '../shared/ingredient.model';
 import { Recipe } from './recipe.model';
 
 export class RecipeService {
-  recipeSelected = new EventEmitter<Recipe>();
+  recipeSelected = new Subject<Recipe>();
 
   private recipes: Recipe[] = [
     new Recipe(
@@ -24,6 +25,10 @@ export class RecipeService {
     return this.recipes.slice();
   }
 
+  getRecipe(index: number) {
+    return this.recipes[index];
+  }
+
   // getRecipe(name: string) {
   //   for (let recipe of this.recipes) {
   //     if (recipe.name === name) {
@@ -39,8 +44,4 @@ export class RecipeService {
   //   });
   //   return recipe;
   // }
-
-  getRecipe(index: number) {
-    return this.recipes[index];
-  }
 }

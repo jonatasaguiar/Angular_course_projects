@@ -8,11 +8,11 @@ import { Component } from '@angular/core';
 export class AppComponent {
   title = 'recipe-app';
 
-  loadedFeature = 'recipe';
+  // loadedFeature = 'recipe';
 
-  onNavigate(feature: string) {
-    console.log(`LoadedFeature Before ${this.loadedFeature}`);
-    this.loadedFeature = feature;
-    console.log(`LoadedFeature after ${this.loadedFeature}`);
-  }
+  // onNavigate(feature: string) {
+  //   console.log(`LoadedFeature Before ${this.loadedFeature}`);
+  //   this.loadedFeature = feature;
+  //   console.log(`LoadedFeature after ${this.loadedFeature}`);
+  // }
 }
