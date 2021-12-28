@@ -1,5 +1,12 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormControl, FormGroup, NgForm } from '@angular/forms';
+import {
+  FormArray,
+  FormControl,
+  FormGroup,
+  NgForm,
+  Validators,
+} from '@angular/forms';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -11,16 +18,125 @@ import { FormControl, FormGroup, NgForm } from '@angular/forms';
 export class AppComponent implements OnInit {
   genders = ['male', 'female'];
   signupForm: FormGroup;
+  forbiddenUsernames = ['Chris', 'Anna'];
 
   ngOnInit(): void {
     this.signupForm = new FormGroup({
-      username: new FormControl(null),
-      email: new FormControl(null),
+      userData: new FormGroup({
+        username: new FormControl(null, [
+          Validators.required,
+          this.forbiddenNames.bind(this),
+        ]),
+        email: new FormControl(
+          null,
+          [Validators.required, Validators.email],
+          this.forbiddenEmails
+        ),
+      }),
       gender: new FormControl('male'),
+      hobbies: new FormArray([new FormControl('male')]),
+    });
+
+    this.signupForm.valueChanges.subscribe((value) => {
+      console.log(`This value is changing`);
+      console.log(value);
+    });
+    this.signupForm.statusChanges.subscribe((status) =>
+      console.log(`This status is changing ${status}`)
+    );
+    // this.signupForm.setValue({
+    //   userData: {
+    //     username: 'Max',
+    //     email: 'max@test.com',
+    //   },
+    //   gender: 'male',
+    //   hobbies: [],
+    // });
+    this.signupForm.patchValue({
+      userData: {
+        username: 'Anna',
+        email: 'anna@test.com',
+      },
+    });
+
+    // ---------- --- REACTIVE  Assignment section
+    this.signupFormAssignment = new FormGroup({
+      projectname: new FormControl(
+        null,
+        [
+          Validators.required,
+          // this.forbiddenProjectNames.bind(this),
+        ],
+        this.forbiddenProjects
+      ),
+      email: new FormControl(null, [Validators.required, Validators.email]),
+      status: new FormControl(null),
     });
   }
   onSubmit() {
     console.log(this.signupForm);
+    this.signupForm.reset();
+  }
+  getControls() {
+    return (<FormArray>this.signupForm.get('hobbies')).controls;
+  }
+  // get controls() {
+  //   return (this.signupForm.get('hobbies') as FormArray).controls;
+  // }
+  onAddHobby() {
+    const control = new FormControl(null, Validators.required);
+    (<FormArray>this.signupForm.get('hobbies')).push(control);
+  }
+  forbiddenNames(control: FormControl): { [s: string]: boolean } {
+    if (this.forbiddenUsernames.indexOf(control.value) !== -1) {
+      console.log('I got you');
+      return { nameIsForbidden: true };
+    }
+    console.log('I didnt get you');
+    return null;
+  }
+
+  forbiddenEmails(control: FormControl): Promise<any> | Observable<any> {
+    const promise = new Promise((resolve, reject) => {
+      setTimeout(() => {
+        if (control.value === 'test@test.com') {
+          resolve({ emailIsForbidden: true });
+        } else {
+          resolve(null);
+        }
+      }, 5000);
+    });
+    return promise;
+  }
+
+  // ------------- REACTIVE  Assignment section
+
+  signupFormAssignment: FormGroup;
+  forbiddenProjectName: ['Test'];
+
+  forbiddenProjectNames(control: FormControl): { [s: string]: boolean } {
+    if (this.forbiddenProjectName.indexOf(control.value) !== -1) {
+      return { projectNameIsForbidden: true };
+    }
+    return null;
+  }
+
+  forbiddenProjects(control: FormControl): Promise<any> | Observable<any> {
+    const promise = new Promise((resolve, reject) => {
+      setTimeout(() => {
+        if (control.value === 'Test') {
+          resolve({ projectIsForbidden: true });
+        } else {
+          resolve(null);
+        }
+      }, 5000);
+    });
+    return promise;
+  }
+
+  onSubmitAssignment() {
+    console.log(this.signupFormAssignment);
+    // this.signupForm.reset();
   }
 }
 
